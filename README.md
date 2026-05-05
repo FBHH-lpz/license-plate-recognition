@@ -17,9 +17,8 @@
 ```
 ├── cover_new.py          # 正面车牌识别（含遮挡检测 + 抗粘连）
 ├── slant_new.py          # 倾斜车牌识别（透视矫正 + 混合分割）
-├── normal.py             # 正常角度车牌识别
 ├── multiple.py           # 多车牌同时检测
-├── optimize.py           # 遮挡/干扰场景优化版
+├── optimize.py           # 正常角度 + 遮挡/干扰场景（取代旧 normal.py）
 ├── template_new.py       # 中文字符模板生成器（粗体）
 │
 ├── images/               # 测试图片集
@@ -64,14 +63,11 @@ python cover_new.py
 # 倾斜车牌
 python slant_new.py
 
-# 正常角度车牌
-python normal.py
+# 正常 / 遮挡干扰场景
+python optimize.py
 
 # 多车牌检测
 python multiple.py
-
-# 遮挡干扰场景
-python optimize.py
 ```
 
 每个脚本底部 `if __name__ == "__main__":` 中可修改 `img_path` 来指定目标图片。
@@ -114,6 +110,5 @@ python optimize.py
 |------|---------|
 | `cover_new.py` | 正面拍摄、车牌无倾斜 |
 | `slant_new.py` | 车牌有明显倾斜/斜角 |
-| `normal.py` | 标准角度、无需透视矫正 |
 | `multiple.py` | 图片中有多辆车 |
-| `optimize.py` | 车牌有遮挡、污渍、干扰物 |
+| `optimize.py` | 正常角度 + 遮挡/污渍/干扰场景 |
