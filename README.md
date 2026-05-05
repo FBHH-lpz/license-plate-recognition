@@ -15,10 +15,8 @@
 ## 项目结构
 
 ```
-├── cover.py              # 正面车牌识别（含遮挡检测）
-├── cover_new.py          # 正面车牌识别优化版（抗粘连）
-├── slant.py              # 倾斜车牌识别（透视矫正）
-├── slant_new.py          # 倾斜车牌识别优化版
+├── cover_new.py          # 正面车牌识别（含遮挡检测 + 抗粘连）
+├── slant_new.py          # 倾斜车牌识别（透视矫正 + 混合分割）
 ├── normal.py             # 正常角度车牌识别
 ├── multiple.py           # 多车牌同时检测
 ├── optimize.py           # 遮挡/干扰场景优化版
@@ -31,16 +29,7 @@
 │   └── distraction/      #   遮挡/干扰车牌
 │
 ├── templates_cn/         # 中文字符模板（标准粗细）
-│   ├── guang.jpg         #   广
-│   ├── zhou.jpg          #   州
-│   ├── dong.jpg          #   东
-│   ├── guan.jpg          #   莞
-│   ├── fo.jpg            #   佛
-│   └── shan.jpg          #   山
-│
-├── templates_bold/       # 中文字符模板（粗体）
-│
-└── normal/               # 早期实验脚本（迭代版本）
+└── templates_bold/       # 中文字符模板（粗体）
 ```
 
 ## 环境依赖
@@ -62,7 +51,6 @@ pip install -r requirements.txt
 
 ```bash
 python template_new.py          # 生成粗体中文字符模板
-python normal/template.py       # 生成标准中文字符模板
 ```
 
 > 注意：模板生成需要系统中安装 **SimHei（黑体）** 字体，默认路径 `C:/Windows/Fonts/simhei.ttf`。
@@ -71,10 +59,13 @@ python normal/template.py       # 生成标准中文字符模板
 
 ```bash
 # 正面车牌
-python cover.py
+python cover_new.py
 
 # 倾斜车牌
-python slant.py
+python slant_new.py
+
+# 正常角度车牌
+python normal.py
 
 # 多车牌检测
 python multiple.py
@@ -99,7 +90,7 @@ python optimize.py
 车牌定位（轮廓筛选 → 纹理密度验证 → 白像素比例验证 → NMS去重）
   │
   ▼
-透视矫正（4点排序 → Homography变换）  ← 仅 slant/cover 系列
+透视矫正（4点排序 → Homography变换）  ← 仅 slant_new/cover_new
   │
   ▼
 字符分割（上下分区 → 自适应阈值 → 抗粘连裁剪 → C位排序 → IOU去重）
@@ -121,8 +112,8 @@ python optimize.py
 
 | 脚本 | 适用场景 |
 |------|---------|
-| `cover.py / cover_new.py` | 正面拍摄、车牌无倾斜 |
-| `slant.py / slant_new.py` | 车牌有明显倾斜/斜角 |
+| `cover_new.py` | 正面拍摄、车牌无倾斜 |
+| `slant_new.py` | 车牌有明显倾斜/斜角 |
 | `normal.py` | 标准角度、无需透视矫正 |
 | `multiple.py` | 图片中有多辆车 |
 | `optimize.py` | 车牌有遮挡、污渍、干扰物 |

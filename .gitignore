@@ -21,6 +21,9 @@ yolo-env/
 # Kilo
 .kilo/
 
+# Legacy
+normal/
+
 # OS
 .DS_Store
 Thumbs.db
